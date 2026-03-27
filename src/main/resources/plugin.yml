@@ -1,0 +1,58 @@
+name: SetHomePlugin
+version: '${project.version}'
+main: de.maxhirtzbruch.sethomeplugin.SetHomePlugin
+api-version: '1.21'
+description: A feature-rich home management plugin with GUI, multi-language support and LuckPerms integration
+author: Maximilian Hirtzbruch
+website: https://github.com/maxhirtzbruch/SetHomePlugin
+
+softdepend:
+  - LuckPerms
+
+commands:
+  sethome:
+    description: Set a home at your current location
+    usage: /sethome <name>
+    aliases: [sh]
+  home:
+    description: Teleport to a home
+    usage: /home <name>
+    aliases: [h]
+  delhome:
+    description: Delete a home
+    usage: /delhome <name>
+    aliases: [deletehome, removehome]
+  homes:
+    description: Open the homes GUI
+    usage: /homes
+    aliases: [homelist, listhomes]
+  sethomereload:
+    description: Reload the SetHomePlugin configuration
+    usage: /sethomereload
+    aliases: [shreload]
+
+permissions:
+  sethome.use:
+    description: Allows using /sethome, /home, /delhome, /homes
+    default: true
+  sethome.admin:
+    description: Admin access - reload config, bypass limits
+    default: op
+  sethome.homes.1:
+    description: Allows 1 home
+    default: false
+  sethome.homes.2:
+    description: Allows 2 homes
+    default: false
+  sethome.homes.3:
+    description: Allows 3 homes
+    default: false
+  sethome.homes.5:
+    description: Allows 5 homes
+    default: false
+  sethome.homes.10:
+    description: Allows 10 homes
+    default: false
+  sethome.homes.unlimited:
+    description: Allows unlimited homes
+    default: op

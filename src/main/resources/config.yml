@@ -1,0 +1,494 @@
+# ╔══════════════════════════════════════════════════════════════╗
+# ║              SetHomePlugin - Configuration                  ║
+# ║         Author: Maximilian Hirtzbruch  |  Version: 1.0      ║
+# ╚══════════════════════════════════════════════════════════════╝
+
+# ──────────────────────────────────────────────────────────────
+#  GENERAL SETTINGS
+# ──────────────────────────────────────────────────────────────
+general:
+  # Available languages: de, en, fr, es, it, pl, nl, pt, ru, zh, ja
+  language: "en"
+
+  # Default max homes for players without a specific LuckPerms rank configured below
+  default-max-homes: 3
+
+  # Teleport delay in seconds (0 = instant)
+  teleport-delay: 3
+
+  # Cancel teleport on move?
+  cancel-on-move: true
+
+  # Play sounds?
+  sounds:
+    enabled: true
+    teleport: "ENTITY_ENDERMAN_TELEPORT"
+    set-home: "BLOCK_ENCHANTMENT_TABLE_USE"
+    delete-home: "ENTITY_ITEM_BREAK"
+    open-gui: "BLOCK_CHEST_OPEN"
+    error: "ENTITY_VILLAGER_NO"
+
+  # Particle effects on teleport?
+  particles:
+    enabled: true
+    type: "PORTAL"
+    count: 30
+
+# ──────────────────────────────────────────────────────────────
+#  LUCKPERMS RANK → HOME LIMIT MAPPING
+#  Format:  rank-name: max-homes
+#  The plugin checks ranks top-down and uses the first match.
+# ──────────────────────────────────────────────────────────────
+rank-homes:
+  owner: 999
+  admin: 50
+  moderator: 20
+  vip-plus: 15
+  vip: 10
+  premium: 7
+  member: 5
+  default: 3
+
+# ──────────────────────────────────────────────────────────────
+#  GUI SETTINGS
+# ──────────────────────────────────────────────────────────────
+gui:
+  rows: 6  # 1-6 rows (multiples of 9 slots)
+
+  # Item for homes in GUI
+  home-item: "LIME_BED"
+
+  # Item shown when slot is empty
+  filler-item: "GRAY_STAINED_GLASS_PANE"
+
+  # Navigation items
+  prev-page-item: "ARROW"
+  next-page-item: "ARROW"
+  close-item: "BARRIER"
+
+  # Show home coordinates in lore?
+  show-coordinates: true
+
+  # Show world name in lore?
+  show-world: true
+
+  # Confirm GUI settings
+  confirm:
+    enabled: true
+    confirm-item: "LIME_CONCRETE"
+    cancel-item: "RED_CONCRETE"
+
+# ──────────────────────────────────────────────────────────────
+#  DATABASE / STORAGE
+#  Type: yaml (flat-file) or mysql
+# ──────────────────────────────────────────────────────────────
+storage:
+  type: "yaml"
+  mysql:
+    host: "localhost"
+    port: 3306
+    database: "sethomeplugin"
+    username: "root"
+    password: "password"
+    table-prefix: "shp_"
+
+# ──────────────────────────────────────────────────────────────
+#  MESSAGES  (per language)
+# ──────────────────────────────────────────────────────────────
+messages:
+
+  # ── ENGLISH ────────────────────────────────────────────────
+  en:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cYou don't have permission to do that."
+    player-only: "&cThis command can only be used by players."
+    home-set: "&aHome &e{name} &ahas been set!"
+    home-already-exists: "&cA home named &e{name} &calready exists. Use &f/delhome {name} &cfirst."
+    home-limit-reached: "&cYou have reached your home limit! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cHome &e{name} &cnot found."
+    home-deleted: "&cHome &e{name} &chas been deleted."
+    teleporting: "&aTeleporting to &e{name}&a in &e{delay} &aseconds... Don't move!"
+    teleport-cancelled: "&cTeleportation cancelled because you moved."
+    teleported: "&aTeleported to &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lYour Homes &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7You don't have any homes yet. Use &f/sethome <name>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} homes used &8&m──────"
+    config-reloaded: "&aConfiguration reloaded successfully!"
+    confirm-delete: "&eRight-click again to confirm deletion of &c{name}&e."
+    home-name-too-long: "&cHome name is too long! Max &e{max} &ccharacters."
+    home-name-invalid: "&cInvalid home name! Only letters, numbers, - and _ are allowed."
+    gui-title: "&8⌂ &b&lYour Homes &7({current}/{max})"
+    gui-home-lore:
+      - "&7Left-click to &aTeleport"
+      - "&7Right-click to &cDelete"
+      - "&8───────────────"
+      - "&7World: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cDelete home &e{name}&c?"
+    gui-confirm-yes: "&a✔ Confirm Delete"
+    gui-confirm-no: "&c✘ Cancel"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePrevious Page"
+    gui-next-page: "&eNext Page"
+    gui-close: "&cClose"
+
+  # ── GERMAN ─────────────────────────────────────────────────
+  de:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cDu hast keine Berechtigung dafür."
+    player-only: "&cDieser Befehl kann nur von Spielern verwendet werden."
+    home-set: "&aHome &e{name} &awurde gesetzt!"
+    home-already-exists: "&cEin Home namens &e{name} &cexistiert bereits. Nutze &f/delhome {name}&c."
+    home-limit-reached: "&cDu hast dein Home-Limit erreicht! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cHome &e{name} &cwurde nicht gefunden."
+    home-deleted: "&cHome &e{name} &cwurde gelöscht."
+    teleporting: "&aTeleportiere zu &e{name}&a in &e{delay} &aSekunden... Nicht bewegen!"
+    teleport-cancelled: "&cTeleportation abgebrochen, da du dich bewegt hast."
+    teleported: "&aTeleportiert zu &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lDeine Homes &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Du hast noch keine Homes. Nutze &f/sethome <name>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} Homes genutzt &8&m──────"
+    config-reloaded: "&aKonfiguration erfolgreich neu geladen!"
+    confirm-delete: "&eRechtsklick erneut, um &c{name}&e zu löschen."
+    home-name-too-long: "&cHome-Name zu lang! Max &e{max} &cZeichen."
+    home-name-invalid: "&cUngültiger Name! Nur Buchstaben, Zahlen, - und _ erlaubt."
+    gui-title: "&8⌂ &b&lDeine Homes &7({current}/{max})"
+    gui-home-lore:
+      - "&7Linksklick zum &aTeleportieren"
+      - "&7Rechtsklick zum &cLöschen"
+      - "&8───────────────"
+      - "&7Welt: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cHome &e{name}&c löschen?"
+    gui-confirm-yes: "&a✔ Löschen bestätigen"
+    gui-confirm-no: "&c✘ Abbrechen"
+    gui-filler-name: "&7"
+    gui-prev-page: "&eVorherige Seite"
+    gui-next-page: "&eNächste Seite"
+    gui-close: "&cSchließen"
+
+  # ── FRENCH ─────────────────────────────────────────────────
+  fr:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cVous n'avez pas la permission."
+    player-only: "&cCette commande est réservée aux joueurs."
+    home-set: "&aLe domicile &e{name} &aa été défini!"
+    home-already-exists: "&cUn domicile nommé &e{name} &cexiste déjà."
+    home-limit-reached: "&cVous avez atteint votre limite! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cDomicile &e{name} &cintrouvable."
+    home-deleted: "&cDomicile &e{name} &csupprimé."
+    teleporting: "&aTéléporation vers &e{name}&a dans &e{delay} &asecondes..."
+    teleport-cancelled: "&cTéléportation annulée car vous avez bougé."
+    teleported: "&aTéléporté vers &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lVos Domiciles &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Vous n'avez aucun domicile. Utilisez &f/sethome <nom>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} utilisés &8&m──────"
+    config-reloaded: "&aConfiguration rechargée!"
+    confirm-delete: "&eFaites un clic droit pour confirmer la suppression de &c{name}&e."
+    home-name-too-long: "&cNom trop long! Max &e{max} &ccaractères."
+    home-name-invalid: "&cNom invalide! Lettres, chiffres, - et _ seulement."
+    gui-title: "&8⌂ &b&lVos Domiciles &7({current}/{max})"
+    gui-home-lore:
+      - "&7Clic gauche pour &aTéléporter"
+      - "&7Clic droit pour &cSupprimer"
+      - "&8───────────────"
+      - "&7Monde: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cSupprimer &e{name}&c?"
+    gui-confirm-yes: "&a✔ Confirmer"
+    gui-confirm-no: "&c✘ Annuler"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePage précédente"
+    gui-next-page: "&ePage suivante"
+    gui-close: "&cFermer"
+
+  # ── SPANISH ────────────────────────────────────────────────
+  es:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cNo tienes permiso para hacer eso."
+    player-only: "&cEste comando solo puede ser usado por jugadores."
+    home-set: "&a¡El hogar &e{name} &aha sido establecido!"
+    home-already-exists: "&cYa existe un hogar llamado &e{name}&c."
+    home-limit-reached: "&c¡Has alcanzado tu límite! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cHogar &e{name} &cno encontrado."
+    home-deleted: "&cHogar &e{name} &celiminado."
+    teleporting: "&aTeleportando a &e{name}&a en &e{delay} &asegunados..."
+    teleport-cancelled: "&cTeleportación cancelada porque te moviste."
+    teleported: "&a¡Teleportado a &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lTus Hogares &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7No tienes hogares. Usa &f/sethome <nombre>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} usados &8&m──────"
+    config-reloaded: "&a¡Configuración recargada!"
+    confirm-delete: "&eHaz clic derecho de nuevo para confirmar la eliminación de &c{name}&e."
+    home-name-too-long: "&c¡Nombre demasiado largo! Máx &e{max} &ccaracteres."
+    home-name-invalid: "&c¡Nombre inválido! Solo letras, números, - y _."
+    gui-title: "&8⌂ &b&lTus Hogares &7({current}/{max})"
+    gui-home-lore:
+      - "&7Clic izquierdo para &aTeleportar"
+      - "&7Clic derecho para &cEliminar"
+      - "&8───────────────"
+      - "&7Mundo: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&c¿Eliminar &e{name}&c?"
+    gui-confirm-yes: "&a✔ Confirmar eliminación"
+    gui-confirm-no: "&c✘ Cancelar"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePágina anterior"
+    gui-next-page: "&ePágina siguiente"
+    gui-close: "&cCerrar"
+
+  # ── ITALIAN ────────────────────────────────────────────────
+  it:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cNon hai i permessi per farlo."
+    player-only: "&cQuesto comando può essere usato solo dai giocatori."
+    home-set: "&aLa casa &e{name} &aè stata impostata!"
+    home-already-exists: "&cEsiste già una casa chiamata &e{name}&c."
+    home-limit-reached: "&cHai raggiunto il tuo limite! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cCasa &e{name} &cnon trovata."
+    home-deleted: "&cCasa &e{name} &celiminata."
+    teleporting: "&aTeleportando a &e{name}&a in &e{delay} &asecondi..."
+    teleport-cancelled: "&cTeleportazione annullata perché ti sei mosso."
+    teleported: "&aTeleportato a &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lLe tue Case &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Non hai case. Usa &f/sethome <nome>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} usate &8&m──────"
+    config-reloaded: "&aConfigurazione ricaricata!"
+    confirm-delete: "&eFai di nuovo clic destro per confermare l'eliminazione di &c{name}&e."
+    home-name-too-long: "&cNome troppo lungo! Massimo &e{max} &ccaratteri."
+    home-name-invalid: "&cNome non valido! Solo lettere, numeri, - e _."
+    gui-title: "&8⌂ &b&lLe Tue Case &7({current}/{max})"
+    gui-home-lore:
+      - "&7Clic sinistro per &aTeleportare"
+      - "&7Clic destro per &cEliminare"
+      - "&8───────────────"
+      - "&7Mondo: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cEliminare &e{name}&c?"
+    gui-confirm-yes: "&a✔ Conferma eliminazione"
+    gui-confirm-no: "&c✘ Annulla"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePagina precedente"
+    gui-next-page: "&ePagina successiva"
+    gui-close: "&cChiudi"
+
+  # ── POLISH ─────────────────────────────────────────────────
+  pl:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cNie masz uprawnień do tego."
+    player-only: "&cTo polecenie może być używane tylko przez graczy."
+    home-set: "&aDom &e{name} &azostał ustawiony!"
+    home-already-exists: "&cDom o nazwie &e{name} &cjuż istnieje."
+    home-limit-reached: "&cOsiągnąłeś limit domów! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cDom &e{name} &cnie został znaleziony."
+    home-deleted: "&cDom &e{name} &czostał usunięty."
+    teleporting: "&aTeleportacja do &e{name}&a za &e{delay} &asekund..."
+    teleport-cancelled: "&cTeleportacja anulowana - poruszyłeś się."
+    teleported: "&aPrzeniesiono do &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lTwoje Domy &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Nie masz żadnych domów. Użyj &f/sethome <nazwa>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} użytych &8&m──────"
+    config-reloaded: "&aKonfiguracja przeładowana!"
+    confirm-delete: "&ePonownie kliknij prawym przyciskiem, aby potwierdzić usunięcie &c{name}&e."
+    home-name-too-long: "&cNazwa za długa! Maks &e{max} &cznaków."
+    home-name-invalid: "&cNieprawidłowa nazwa! Tylko litery, cyfry, - i _."
+    gui-title: "&8⌂ &b&lTwoje Domy &7({current}/{max})"
+    gui-home-lore:
+      - "&7Lewy klik aby &aTeleportować"
+      - "&7Prawy klik aby &cUsunąć"
+      - "&8───────────────"
+      - "&7Świat: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cUsunąć &e{name}&c?"
+    gui-confirm-yes: "&a✔ Potwierdź usunięcie"
+    gui-confirm-no: "&c✘ Anuluj"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePoprzednia strona"
+    gui-next-page: "&eNastępna strona"
+    gui-close: "&cZamknij"
+
+  # ── DUTCH ──────────────────────────────────────────────────
+  nl:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cJe hebt geen toestemming daarvoor."
+    player-only: "&cDit commando kan alleen door spelers gebruikt worden."
+    home-set: "&aThuis &e{name} &ais ingesteld!"
+    home-already-exists: "&cEr bestaat al een thuis met de naam &e{name}&c."
+    home-limit-reached: "&cJe hebt je limiet bereikt! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cThuis &e{name} &cniet gevonden."
+    home-deleted: "&cThuis &e{name} &cverwijderd."
+    teleporting: "&aTeleporteren naar &e{name}&a in &e{delay} &aseconden..."
+    teleport-cancelled: "&cTeleportatie geannuleerd omdat je bewoog."
+    teleported: "&aGeteleporteerd naar &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lJouw Huizen &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Je hebt nog geen huizen. Gebruik &f/sethome <naam>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} gebruikt &8&m──────"
+    config-reloaded: "&aConfiguratie herladen!"
+    confirm-delete: "&eKlik nogmaals met rechts om &c{name}&e te verwijderen."
+    home-name-too-long: "&cNaam te lang! Max &e{max} &ctekens."
+    home-name-invalid: "&cOngeldig naam! Alleen letters, cijfers, - en _."
+    gui-title: "&8⌂ &b&lJouw Huizen &7({current}/{max})"
+    gui-home-lore:
+      - "&7Linksklik om te &aTeleporteren"
+      - "&7Rechtsklik om te &cVerwijderen"
+      - "&8───────────────"
+      - "&7Wereld: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cVerwijder &e{name}&c?"
+    gui-confirm-yes: "&a✔ Verwijdering bevestigen"
+    gui-confirm-no: "&c✘ Annuleren"
+    gui-filler-name: "&7"
+    gui-prev-page: "&eVorige pagina"
+    gui-next-page: "&eVolgende pagina"
+    gui-close: "&cSluiten"
+
+  # ── PORTUGUESE ─────────────────────────────────────────────
+  pt:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cVocê não tem permissão para isso."
+    player-only: "&cEste comando só pode ser usado por jogadores."
+    home-set: "&aA casa &e{name} &afoi definida!"
+    home-already-exists: "&cJá existe uma casa chamada &e{name}&c."
+    home-limit-reached: "&cVocê atingiu seu limite! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cCasa &e{name} &cnão encontrada."
+    home-deleted: "&cCasa &e{name} &cexcluída."
+    teleporting: "&aTeleportando para &e{name}&a em &e{delay} &asegundos..."
+    teleport-cancelled: "&cTeleportação cancelada porque você se moveu."
+    teleported: "&aTeleportado para &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lSuas Casas &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7Você não tem casas. Use &f/sethome <nome>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} utilizadas &8&m──────"
+    config-reloaded: "&aConfiguração recarregada!"
+    confirm-delete: "&eClique direito novamente para confirmar a exclusão de &c{name}&e."
+    home-name-too-long: "&cNome muito longo! Máx &e{max} &ccaracteres."
+    home-name-invalid: "&cNome inválido! Apenas letras, números, - e _."
+    gui-title: "&8⌂ &b&lSuas Casas &7({current}/{max})"
+    gui-home-lore:
+      - "&7Clique esquerdo para &aTeleportar"
+      - "&7Clique direito para &cExcluir"
+      - "&8───────────────"
+      - "&7Mundo: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cExcluir &e{name}&c?"
+    gui-confirm-yes: "&a✔ Confirmar exclusão"
+    gui-confirm-no: "&c✘ Cancelar"
+    gui-filler-name: "&7"
+    gui-prev-page: "&ePágina anterior"
+    gui-next-page: "&ePróxima página"
+    gui-close: "&cFechar"
+
+  # ── RUSSIAN ────────────────────────────────────────────────
+  ru:
+    prefix: "&8[&b&lSetHome&8] &r"
+    no-permission: "&cУ вас нет прав на это."
+    player-only: "&cЭта команда доступна только игрокам."
+    home-set: "&aДом &e{name} &aустановлен!"
+    home-already-exists: "&cДом с именем &e{name} &cуже существует."
+    home-limit-reached: "&cВы достигли лимита домов! (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cДом &e{name} &cне найден."
+    home-deleted: "&cДом &e{name} &cудалён."
+    teleporting: "&aТелепортация к &e{name}&a через &e{delay} &aсекунды..."
+    teleport-cancelled: "&cТелепортация отменена — вы пошевелились."
+    teleported: "&aТелепортирован к &e{name}&a!"
+    homes-list-header: "&8&m──────&r &b&lВаши Дома &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7У вас нет домов. Используйте &f/sethome <имя>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} использовано &8&m──────"
+    config-reloaded: "&aКонфигурация перезагружена!"
+    confirm-delete: "&eЩёлкните правой кнопкой ещё раз, чтобы удалить &c{name}&e."
+    home-name-too-long: "&cИмя слишком длинное! Макс &e{max} &cсимволов."
+    home-name-invalid: "&cНедопустимое имя! Только буквы, цифры, - и _."
+    gui-title: "&8⌂ &b&lВаши Дома &7({current}/{max})"
+    gui-home-lore:
+      - "&7ЛКМ для &aТелепортации"
+      - "&7ПКМ для &cУдаления"
+      - "&8───────────────"
+      - "&7Мир: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&cУдалить &e{name}&c?"
+    gui-confirm-yes: "&a✔ Подтвердить удаление"
+    gui-confirm-no: "&c✘ Отмена"
+    gui-filler-name: "&7"
+    gui-prev-page: "&eПредыдущая страница"
+    gui-next-page: "&eСледующая страница"
+    gui-close: "&cЗакрыть"
+
+  # ── CHINESE (Simplified) ────────────────────────────────────
+  zh:
+    prefix: "&8[&b&l家园插件&8] &r"
+    no-permission: "&c你没有权限执行此操作。"
+    player-only: "&c此命令只能由玩家使用。"
+    home-set: "&a家园 &e{name} &a已设置！"
+    home-already-exists: "&c名为 &e{name} &c的家园已存在。"
+    home-limit-reached: "&c你已达到家园上限！ (&e{current}&c/&e{max}&c)"
+    home-not-found: "&c家园 &e{name} &c未找到。"
+    home-deleted: "&c家园 &e{name} &c已删除。"
+    teleporting: "&a正在传送到 &e{name}&a，&e{delay} &a秒后传送...请勿移动！"
+    teleport-cancelled: "&c传送已取消，因为你移动了。"
+    teleported: "&a已传送到 &e{name}&a！"
+    homes-list-header: "&8&m──────&r &b&l你的家园 &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7你还没有家园。使用 &f/sethome <名称>"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} 已使用 &8&m──────"
+    config-reloaded: "&a配置已重新加载！"
+    confirm-delete: "&e再次右键点击以确认删除 &c{name}&e。"
+    home-name-too-long: "&c名称太长！最多 &e{max} &c个字符。"
+    home-name-invalid: "&c名称无效！只能使用字母、数字、- 和 _。"
+    gui-title: "&8⌂ &b&l你的家园 &7({current}/{max})"
+    gui-home-lore:
+      - "&7左键 &a传送"
+      - "&7右键 &c删除"
+      - "&8───────────────"
+      - "&7世界: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&c删除 &e{name}&c？"
+    gui-confirm-yes: "&a✔ 确认删除"
+    gui-confirm-no: "&c✘ 取消"
+    gui-filler-name: "&7"
+    gui-prev-page: "&e上一页"
+    gui-next-page: "&e下一页"
+    gui-close: "&c关闭"
+
+  # ── JAPANESE ───────────────────────────────────────────────
+  ja:
+    prefix: "&8[&b&lホームプラグイン&8] &r"
+    no-permission: "&cその操作を行う権限がありません。"
+    player-only: "&cこのコマンドはプレイヤーのみ使用できます。"
+    home-set: "&aホーム &e{name} &aが設定されました！"
+    home-already-exists: "&c&e{name} &cという名前のホームはすでに存在します。"
+    home-limit-reached: "&cホームの上限に達しました！ (&e{current}&c/&e{max}&c)"
+    home-not-found: "&cホーム &e{name} &cが見つかりません。"
+    home-deleted: "&cホーム &e{name} &cが削除されました。"
+    teleporting: "&e{delay} &a秒後に &e{name}&a にテレポートします...動かないでください！"
+    teleport-cancelled: "&c移動したためテレポートがキャンセルされました。"
+    teleported: "&e{name}&a にテレポートしました！"
+    homes-list-header: "&8&m──────&r &b&lあなたのホーム &8&m──────"
+    homes-list-entry: "  &8• &e{name} &8| &7{world} &8(&7{x}&8, &7{y}&8, &7{z}&8)"
+    homes-list-empty: "&7ホームがありません。&f/sethome <名前> &7で作成できます"
+    homes-list-footer: "&8&m──────&r &7{current}&8/&7{max} 使用中 &8&m──────"
+    config-reloaded: "&a設定を再読み込みしました！"
+    confirm-delete: "&e再度右クリックして &c{name}&e の削除を確認してください。"
+    home-name-too-long: "&c名前が長すぎます！最大 &e{max} &c文字。"
+    home-name-invalid: "&c無効な名前！英数字、- および _ のみ使用可能です。"
+    gui-title: "&8⌂ &b&lホーム一覧 &7({current}/{max})"
+    gui-home-lore:
+      - "&7左クリックで &aテレポート"
+      - "&7右クリックで &c削除"
+      - "&8───────────────"
+      - "&7ワールド: &f{world}"
+      - "&7X: &f{x} &7Y: &f{y} &7Z: &f{z}"
+    gui-confirm-title: "&c&e{name}&c を削除しますか？"
+    gui-confirm-yes: "&a✔ 削除を確認"
+    gui-confirm-no: "&c✘ キャンセル"
+    gui-filler-name: "&7"
+    gui-prev-page: "&e前のページ"
+    gui-next-page: "&e次のページ"
+    gui-close: "&c閉じる"
