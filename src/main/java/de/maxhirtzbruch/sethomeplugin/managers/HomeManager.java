@@ -117,7 +117,8 @@ public class HomeManager {
     }
 
     private void savePlayer(UUID uuid) {
-        Map<String, Home> homes = homeCache.getOrDefault(uuid, Collections.emptyMap());
+        Map<String, Home> homes = homeCache.get(uuid);
+        if (homes == null) return; // not loaded this session: the file on disk is already current
         File file = getPlayerFile(uuid);
 
         FileConfiguration cfg = new YamlConfiguration();
